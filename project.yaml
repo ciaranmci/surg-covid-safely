@@ -1,18 +1,66 @@
 version: '3.0'
 
 expectations:
-  population_size: 1000
+  population_size: 1000000
 
 actions:
+
+  ## #################################### 
+  ## Prerequisites
+  ## ####################################
+  ## Define study design parameters
+  # See example https://github.com/opensafely/covid-ve-change-over-time/blob/da96e7344995f385e54213c90490f4d8d80e57f9/analysis/design.R
+  design:
+      run: r:<folder_path/file_path.R>
+      outputs:
+        highly_sensitive:
+          <output_category_name>: output/<filename>.<filetype>
+        moderately_sensitive:
+          <output_category_name>: output/<filename>.<filetype>
+          
+  ## Load reference datasets, e.g. MSOA deprivation
+  script0:
+      run: r:<folder_path/file_path.R>
+      outputs:
+        highly_sensitive:
+          <output_category_name>: output/<filename>.<filetype>
+        moderately_sensitive:
+          <output_category_name>: output/<filename>.<filetype>
+          
+  ## #################################### 
+  ## Study definition 
+  ## #################################### 
   generate_study_population:
     run: cohortextractor:latest generate_cohort --study-definition study_definition
     outputs:
       highly_sensitive:
         cohort: output/input.csv
 
-describe:
-  run: r:latest analysis/report.R
-  needs: [generate_study_population]
-  outputs:
-    moderately_sensitive:
-      cohort: output/descriptive.png
+  ## #################################### 
+  ## Preprocessing
+  ## #################################### 
+  script1:
+    run: r:<folder_path/file_path.R>
+    needs:
+    - prerequistite_action1
+    - prerequistite_action2
+    outputs:
+      highly_sensitive:
+        <output_category_name>: output/<filename>.<filetype>
+      moderately_sensitive:
+        <output_category_name>: output/<filename>.<filetype>
+        
+  ## #################################### 
+  ## Analysis scripts
+  ## #################################### 
+  script2:
+    run: r:<folder_path/file_path.R>
+    needs:
+    - prerequistite_action1
+    - prerequistite_action2
+    outputs:
+      highly_sensitive:
+        <output_category_name>: output/<filename>.<filetype>
+      moderately_sensitive:
+        <output_category_name>: output/<filename>.<filetype>
+
