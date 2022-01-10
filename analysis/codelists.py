@@ -180,3 +180,17 @@ codelist_respiratory_comorbidities = combine_codelists(
     codelist_asthma,
     codelist_COPD,
 )
+
+## BUPA grade of surgery.
+# Minor codes.
+codelist_BUPA_grade_of_surgery_minor = codelist_from_csv(
+   "codelists/codelist-BUPA-grade-of-surgery-minor.csv",
+    system = "snomed",
+    column = "code",
+)
+# Major codes.
+codelist_BUPA_grade_of_surgery_major = codelist_from_csv(
+   "codelists/codelist-BUPA-grade-of-surgery-major.csv",
+    system = "snomed",
+    column = "code",
+)
