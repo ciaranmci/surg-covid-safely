@@ -1,5 +1,7 @@
 from cohortextractor import StudyDefinition, patients, codelist, codelist_from_csv  # NOQA
 
+# Import codelists.py script.
+from codelists import *
 
 study = StudyDefinition(
     default_expectations={
