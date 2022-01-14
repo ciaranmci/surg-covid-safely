@@ -4,12 +4,31 @@ from cohortextractor import (codelist_from_csv, combine_codelists)
 ## Cohort definition
 ## #####################
 
-# Patients undergoing cancer-related surgery.
+# Patients with a cancer diagnosis.
+codelist_cancer = codelist_from_csv(
+    "codelists/codelist-cancer.csv",
+    system="snomed",
+    column="code",
+)
+
+# Patients undergoing surgery.
 codelist_cancer_surgery = codelist_from_csv(
     "codelists/codelist-cancer-surgery.csv",
     system="snomed",
     column="code",
 )
+
+# Define function that creates the intersection of codelists.
+# def intersect_codelist(codelist1, codelist2):
+#   ...
+#   ...
+
+# Patients undergoing cancer-related surgery.
+codelist_cancer_related_surgery = intersect_codelists(
+    codelist_cancer,
+    codelist_cancer_surgery
+)
+
 
 ## #####################
 ## Exposure
@@ -132,8 +151,8 @@ codelist_intraperioneal_or_intrathoracic_surgery = codelist_combine(
     codelist_intrathoracic_surgery,
 )
 # Ischedmic heart disease.
-codelist_ischedmic_heart_disease = codelist_from_csv(
-    "codelists/codelist-ischedmic-heart-disease.csv",
+codelist_ischemic_heart_disease = codelist_from_csv(
+    "codelists/codelist-ischemic-heart-disease.csv",
     system="snomed",
     column="code",
 )
